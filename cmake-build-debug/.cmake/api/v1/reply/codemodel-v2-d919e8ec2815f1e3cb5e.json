@@ -6,10 +6,9 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.21"
+						"string" : "3.20"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "comp::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-comp-Debug-99750d3ff0c877f3fd3c.json",
+					"jsonFile" : "target-comp-Debug-8975e760a5f033831e4a.json",
 					"name" : "comp",
 					"projectIndex" : 0
 				}
@@ -49,12 +48,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/samuel/Documents/c++/DT064G/comp/cmake-build-debug",
-		"source" : "/home/samuel/Documents/c++/DT064G/comp"
+		"build" : "/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug",
+		"source" : "/home/samuel/Documents/c++/DT064G/sorting_competition"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 3
+		"minor" : 2
 	}
 }

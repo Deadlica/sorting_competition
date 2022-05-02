@@ -1,3 +1,3 @@
-/home/samuel/Documents/c++/DT064G/comp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/samuel/Documents/c++/DT064G/comp/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/samuel/Documents/c++/DT064G/comp/cmake-build-debug/CMakeFiles/comp.dir
+/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug/CMakeFiles/comp.dir

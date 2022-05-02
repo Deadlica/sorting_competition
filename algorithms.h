@@ -153,20 +153,19 @@ void counting_sort(it first, it last, T nr_pos) {
     std::vector<int> bucket(bucket_size, 0);
     std::vector<typename it::value_type> output(size);
     it current = first;
-    for(int index = 0; index < bucket.size(); index++, current++) {
+
+    for(int index = 0; index < size; index++, current++) {
         bucket[((*current) / nr_pos) % 10]++;
     }
     for(int index = 0; index < bucket_size; index++) {
         bucket[index] += bucket[index - 1];
     }
-    for(int index = size - 1; index >= 0; index--) {
-        output[bucket[((first + index) / nr_pos) % 10] - 1] = first + index;
-        bucket[((first + index) / nr_pos) % 10]--;
+    current = last - 1;
+    for(int index = size - 1; index >= 0; index--, current--) {
+        output[bucket[((*current) / nr_pos) % 10] - 1] = *current;
+        bucket[((*current) / nr_pos) % 10]--;
     }
-    for(auto e: output) {
-        std::cout << e << ", ";
-    }
-    std::cout << std::endl;
+    std::copy(output.begin(), output.end(), first);
 }
 
 template<typename it>
@@ -181,7 +180,8 @@ void radix_sort(it first, it last) {
 
 template<typename it>
 void heap_sort(it first, it last) {
-
+    std::make_heap(first, last);
+    std::sort_heap(first, last);
 }
 
 template<typename it, typename container = std::vector<typename it::value_type>>

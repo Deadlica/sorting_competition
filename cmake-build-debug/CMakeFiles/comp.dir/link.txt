@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/comp.dir/main.cpp.o CMakeFiles/comp.dir/timer.cpp.o -o comp 
