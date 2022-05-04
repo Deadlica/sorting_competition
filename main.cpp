@@ -20,10 +20,9 @@ int main() {
         radix_sort(temp.begin(), temp.end());
         timer.stop();
         time_measurements.push_back(timer.time());
+        std::cout << std::is_sorted(temp.begin(), temp.end()) << std::endl;
     }
     double average_time = std::accumulate(time_measurements.begin(), time_measurements.end(), 0.0) / time_measurements.size();
     std::cout << average_time << std::endl;
-
-
 
 }

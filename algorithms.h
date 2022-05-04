@@ -9,7 +9,6 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
-#include <cassert>
 
 enum pivot {MEDIAN_OF_THREE, RIGHT_ELEMENT};
 
@@ -17,7 +16,9 @@ template<typename T>
 size_t count_digits(T number) { //Kinda hard coded for the specific data :/
     std::string str_num = std::to_string(number);
     size_t comma_pos = str_num.find('.');
+    std::cout << str_num << std::endl;
     if(comma_pos != std::string::npos) {
+
         return comma_pos + 2;
     }
     return str_num.size();
@@ -151,6 +152,11 @@ namespace alg {
         std::cout << "Sorted" << std::endl;
         return true;
     }
+}
+
+template<typename it>
+void counting_sort_string(it first, it last) {
+
 }
 
 template<typename it>
