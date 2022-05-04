@@ -15,6 +15,8 @@ cmath
 -
 iostream
 -
+cassert
+-
 
 /home/samuel/Documents/c++/DT064G/sorting_competition/main.cpp
 iostream
@@ -25,6 +27,18 @@ vector
 -
 timer.h
 /home/samuel/Documents/c++/DT064G/sorting_competition/timer.h
+numeric
+-
+reader.h
+/home/samuel/Documents/c++/DT064G/sorting_competition/reader.h
+
+/home/samuel/Documents/c++/DT064G/sorting_competition/reader.h
+vector
+-
+string
+-
+fstream
+-
 
 /home/samuel/Documents/c++/DT064G/sorting_competition/timer.h
 chrono

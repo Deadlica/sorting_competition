@@ -4,7 +4,11 @@
 CMakeFiles/comp.dir/main.cpp.o: \
  ../algorithms.h \
  ../main.cpp \
+ ../reader.h \
  ../timer.h
+CMakeFiles/comp.dir/reader.cpp.o: \
+ ../reader.cpp \
+ ../reader.h
 CMakeFiles/comp.dir/timer.cpp.o: \
  ../timer.cpp \
  ../timer.h

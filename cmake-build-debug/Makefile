@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/comp.dir/build.make CMakeFiles/comp.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+reader.o: reader.cpp.o
+.PHONY : reader.o
+
+# target to build an object file
+reader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/comp.dir/build.make CMakeFiles/comp.dir/reader.cpp.o
+.PHONY : reader.cpp.o
+
+reader.i: reader.cpp.i
+.PHONY : reader.i
+
+# target to preprocess a source file
+reader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/comp.dir/build.make CMakeFiles/comp.dir/reader.cpp.i
+.PHONY : reader.cpp.i
+
+reader.s: reader.cpp.s
+.PHONY : reader.s
+
+# target to generate assembly for a file
+reader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/comp.dir/build.make CMakeFiles/comp.dir/reader.cpp.s
+.PHONY : reader.cpp.s
+
 timer.o: timer.cpp.o
 .PHONY : timer.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... reader.o"
+	@echo "... reader.i"
+	@echo "... reader.s"
 	@echo "... timer.o"
 	@echo "... timer.i"
 	@echo "... timer.s"

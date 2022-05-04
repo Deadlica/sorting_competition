@@ -4,7 +4,11 @@
 CMakeFiles/comp.dir/main.cpp.o
  /home/samuel/Documents/c++/DT064G/sorting_competition/algorithms.h
  /home/samuel/Documents/c++/DT064G/sorting_competition/main.cpp
+ /home/samuel/Documents/c++/DT064G/sorting_competition/reader.h
  /home/samuel/Documents/c++/DT064G/sorting_competition/timer.h
+CMakeFiles/comp.dir/reader.cpp.o
+ /home/samuel/Documents/c++/DT064G/sorting_competition/reader.cpp
+ /home/samuel/Documents/c++/DT064G/sorting_competition/reader.h
 CMakeFiles/comp.dir/timer.cpp.o
  /home/samuel/Documents/c++/DT064G/sorting_competition/timer.cpp
  /home/samuel/Documents/c++/DT064G/sorting_competition/timer.h

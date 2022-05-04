@@ -9,12 +9,18 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <cassert>
 
 enum pivot {MEDIAN_OF_THREE, RIGHT_ELEMENT};
 
 template<typename T>
-size_t count_digits(T number) {
-    return int(log10(number) + 1);
+size_t count_digits(T number) { //Kinda hard coded for the specific data :/
+    std::string str_num = std::to_string(number);
+    size_t comma_pos = str_num.find('.');
+    if(comma_pos != std::string::npos) {
+        return comma_pos + 2;
+    }
+    return str_num.size();
 }
 
 template<typename T>
@@ -147,23 +153,23 @@ namespace alg {
     }
 }
 
-template<typename it, typename T>
-void counting_sort(it first, it last, T nr_pos) {
+template<typename it>
+void counting_sort(it first, it last, int nr_pos) {
     size_t size = last - first, bucket_size = 10;
-    std::vector<int> bucket(bucket_size, 0);
-    std::vector<typename it::value_type> output(size);
+    std::vector<double> output(size);
+    int bucket[10] = {0};
     it current = first;
 
-    for(int index = 0; index < size; index++, current++) {
-        bucket[((*current) / nr_pos) % 10]++;
+    for(;current != last; current++) {
+        bucket[int(((*current) * 100) / nr_pos) % 10]++;
     }
-    for(int index = 0; index < bucket_size; index++) {
+
+    for(int index = 1; index < bucket_size; index++) {
         bucket[index] += bucket[index - 1];
     }
-    current = last - 1;
-    for(int index = size - 1; index >= 0; index--, current--) {
-        output[bucket[((*current) / nr_pos) % 10] - 1] = *current;
-        bucket[((*current) / nr_pos) % 10]--;
+    for(current = last - 1; current >= first; current--) {
+        output[bucket[int(((*current) * 100) / nr_pos) % 10] - 1] = *current;
+        bucket[int(((*current) * 100) / nr_pos) % 10]--;
     }
     std::copy(output.begin(), output.end(), first);
 }
@@ -175,7 +181,6 @@ void radix_sort(it first, it last) {
     for(int nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) {
         counting_sort(first, last, nr_pos);
     }
-
 }
 
 template<typename it>

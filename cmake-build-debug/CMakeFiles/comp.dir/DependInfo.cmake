@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/samuel/Documents/c++/DT064G/sorting_competition/main.cpp" "/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug/CMakeFiles/comp.dir/main.cpp.o"
+  "/home/samuel/Documents/c++/DT064G/sorting_competition/reader.cpp" "/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug/CMakeFiles/comp.dir/reader.cpp.o"
   "/home/samuel/Documents/c++/DT064G/sorting_competition/timer.cpp" "/home/samuel/Documents/c++/DT064G/sorting_competition/cmake-build-debug/CMakeFiles/comp.dir/timer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

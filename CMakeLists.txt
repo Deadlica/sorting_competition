@@ -3,4 +3,4 @@ project(comp)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(comp main.cpp timer.cpp)
+add_executable(comp main.cpp timer.cpp reader.cpp)
