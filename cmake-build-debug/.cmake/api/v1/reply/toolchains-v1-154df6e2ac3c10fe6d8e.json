@@ -34,7 +34,7 @@
 					]
 				},
 				"path" : "/usr/bin/cc",
-				"version" : "10.2.0"
+				"version" : "10.2.1"
 			},
 			"language" : "C",
 			"sourceFileExtensions" : 
@@ -80,7 +80,7 @@
 					]
 				},
 				"path" : "/usr/bin/c++",
-				"version" : "10.2.0"
+				"version" : "10.2.1"
 			},
 			"language" : "CXX",
 			"sourceFileExtensions" : 
@@ -93,7 +93,9 @@
 				"cxx",
 				"mm",
 				"mpp",
-				"CPP"
+				"CPP",
+				"ixx",
+				"cppm"
 			]
 		}
 	],
