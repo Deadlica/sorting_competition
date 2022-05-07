@@ -10,15 +10,15 @@
 #include <cmath>
 #include <sstream>
 #include <iostream>
+#include <limits>
 
 enum pivot {MEDIAN_OF_THREE, RIGHT_ELEMENT};
 
 template<typename T>
-size_t count_float_digits(T number, int n) { //Kinda hard coded for the specific data :/
+size_t count_float_digits(T number) { //Kinda hard coded for the specific data :/
     std::ostringstream out;
-    out.precision(n);
+    out.precision(std::numeric_limits<T>::radix);
     out << std::fixed << number;
-    std::cout << out.str().size() - 1 << std::endl;
     return out.str().size() - 1;
 }
 
@@ -158,10 +158,10 @@ void counting_sort_string(it first, it last) {
 }
 
 template<typename it>
-void counting_sort_float(it first, it last, int nr_pos) {
+void counting_sort_float(it first, it last, unsigned long int nr_pos) {
     unsigned int remove_decimal = std::pow(10, 2);
     size_t size = last - first, bucket_size = 10;
-    std::vector<double> output(size);
+    double* output = new double[size];
     int bucket[10] = {0};
     it current = first;
 
@@ -176,16 +176,14 @@ void counting_sort_float(it first, it last, int nr_pos) {
         output[bucket[int(((*current) * remove_decimal) / nr_pos) % 10] - 1] = *current;
         bucket[int(((*current) * remove_decimal) / nr_pos) % 10]--;
     }
-    std::copy(output.begin(), output.end(), first);
+    std::copy(output, output + size, first);
 }
 
 template<typename it>
 void radix_float(it first, it last) {
     it max = std::max_element(first, last);
-    std::cout.precision(std::numeric_limits<double>::max_digits10);
-    std::cout << *max << std::endl;
-    size_t iterations = count_float_digits(*max, 6);
-    for(int nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) {
+    size_t iterations = count_float_digits(*max);
+    for(unsigned long nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) {
         counting_sort_float(first, last, nr_pos);
     }
 }
@@ -197,14 +195,26 @@ void counting_sort_string(it first, it last, int index) {
     int bucket[255] = {0};
     it current = first;
 
-    for(;current != last; current++) {}
+    for(;current != last; current++) {
+        bucket[(*current)[index]]++;
+    }
+
+    for(int i = 0; i < 254; i++) {
+        bucket[i + 1] += bucket[i];
+    }
+
+    for(current = last - 1; current >= first; current--) {
+        output[bucket[(*current)[index]] - 1] = *current;
+        bucket[(*current)[index]]--;
+    }
+    std::copy(output.begin(), output.end(), first);
 }
 
 template<typename it>
 void radix_string(it first, it last) {
     it max = std::max_element(first, last);
     size_t iterations = (*max).size();
-    for(int i = 0; i < iterations; i++) {
+    for(int i = iterations - 1; i >= 0; i--) {
         counting_sort_string(first, last, i);
     }
 }

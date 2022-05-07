@@ -20,8 +20,8 @@ std::vector<double> parse_ica(std::string filename) {
     return data;
 }
 
-std::vector<long double> parse_jst(std::string filename) {
-    std::vector<long double> data;
+std::vector<double> parse_jst(std::string filename) {
+    std::vector<double> data;
     std::ifstream file(filename);
     long double current_element;
     while(!file.eof()) {
