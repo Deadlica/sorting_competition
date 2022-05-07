@@ -241,4 +241,11 @@ container merge_sort(it first, it last) {
    return merged;
 }
 
+template<typename it>
+void bogo_sort(it first, it last) {
+    while(!std::is_sorted(first, last)) {
+        std::random_shuffle(first, last);
+    }
+}
+
 #endif
