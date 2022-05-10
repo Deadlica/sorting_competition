@@ -15,11 +15,30 @@
 enum pivot {MEDIAN_OF_THREE, RIGHT_ELEMENT};
 
 template<typename T>
-size_t count_float_digits(T number) { //Kinda hard coded for the specific data :/
-    std::ostringstream out;
-    out.precision(std::numeric_limits<T>::radix);
-    out << std::fixed << number;
-    return out.str().size() - 1;
+size_t count_float_digits(T number) {
+    size_t nr_of_digits = 0;
+    size_t nr_of_floats = 0;
+    T floats = number - int(number);
+    while(std::abs(floats) > 0.0000001) {
+        floats *= 10;
+        nr_of_floats++;
+        floats -= int(floats);
+    }
+    while(int(number) > 0) {
+        number /= 10;
+        nr_of_digits++;
+    }
+    return nr_of_digits + nr_of_floats;
+}
+
+template<typename T>
+size_t count_float_int_digits(T number) { //Kinda hard coded for the specific data :/
+    size_t nr_of_digits = 0;
+    while(number > 1) {
+        number /= 10;
+        nr_of_digits++;
+    }
+    return nr_of_digits;
 }
 
 template<typename T>
@@ -94,12 +113,14 @@ T find_median_pivot(T first, T middle, T last) {
 
 template<typename T>
 void insertion_sort(T first, T last) {
-    T key, prev;
-    for(auto current = first + 1; current != last; current++) {
-        key = current;
-        prev = current - 1;
-        for(;*key < *prev && prev != first - 1; key--, prev--) {
-            std::iter_swap(key, prev);
+    if(first < last) {
+        T key, prev;
+        for (auto current = first + 1; current != last; current++) {
+            key = current;
+            prev = current - 1;
+            for (; *key < *prev && prev != first - 1; key--, prev--) {
+                std::iter_swap(key, prev);
+            }
         }
     }
 }
@@ -150,11 +171,6 @@ namespace alg {
         std::cout << "Sorted" << std::endl;
         return true;
     }
-}
-
-template<typename it>
-void counting_sort_string(it first, it last) {
-
 }
 
 template<typename it>
@@ -245,6 +261,50 @@ template<typename it>
 void bogo_sort(it first, it last) {
     while(!std::is_sorted(first, last)) {
         std::random_shuffle(first, last);
+    }
+}
+
+template<typename it>
+void intro_sort_helper(it first, it last, int depth_limit) {
+   size_t size = last - first;
+   if(size < 16) {
+       insertion_sort(first, last);
+       return;
+   }
+   if(depth_limit == 0) {
+       heap_sort(first, last);
+       return;
+   }
+   it pivot = find_median_pivot(first, first + size / 2, last - 1);
+   std::iter_swap(pivot, last - 1);
+   pivot = partition(first, last - 1);
+   intro_sort_helper(first, pivot, depth_limit - 1);
+   intro_sort_helper(pivot + 1, last, depth_limit - 1);
+}
+
+template<typename it>
+void intro_sort(it first, it last) {
+    intro_sort_helper(first, last, 2 * std::log2(last - first));
+}
+
+template<typename it>
+void tim_sort(it first, it last) {
+    const int subarray_size = 32;
+    const int size = last - first;
+
+    for(int i = 0; i < size; i += subarray_size) {
+        insertion_sort(first + i, first + std::min((i + subarray_size - 1), (size - 1)));
+    }
+
+    for(int i = subarray_size; i < size; i = 2 * i) {
+        for(int left = 0; left < size; left += 2 * i) {
+            int mid = left + i - 1;
+            int right = std::min(left + 2 * i - 1, size - 1);
+
+            if(mid < right) {
+                std::inplace_merge(first + left, first + mid, first + right);
+            }
+        }
     }
 }
 
