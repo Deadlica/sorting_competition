@@ -4,15 +4,16 @@
 #include "timer.h"
 #include <numeric>
 #include "reader.h"
+#include "../ips4o/ips4o.hpp"
 
 void sort_ica();
 void sort_jst();
 void sort_new_plates();
 
 int main() {
-    //sort_ica();
+    sort_ica();
     sort_jst();
-    //sort_new_plates();
+    sort_new_plates();
 }
 
 void sort_ica() {
@@ -49,10 +50,11 @@ void sort_jst() {
     auto content = parse_jst("data/JST.txt");
     Timer timer;
     std::vector<double> time_measurements;
+    std::cout << "JST.txt" << std::endl;
     for(int i = 0; i < 5; i++) { //JST.txt sorting
         auto temp = content;
         timer.start();
-        tim_sort(temp.begin(), temp.end());
+        ips4o::sort(temp.begin(), temp.end());
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;
