@@ -24,7 +24,7 @@ void sort_ica() {
     for(int i = 0; i < 5; i++) { //ICA.txt sorting
         auto temp = content;
         timer.start();
-        radix_float(temp.begin(), temp.end());
+        radix_sort(temp.begin(), temp.end());
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;
@@ -54,7 +54,7 @@ void sort_jst() {
     for(int i = 0; i < 5; i++) { //JST.txt sorting
         auto temp = content;
         timer.start();
-        ips4o::sort(temp.begin(), temp.end());
+	    intro_sort(temp.begin(), temp.end());
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;
@@ -83,7 +83,7 @@ void sort_new_plates() {
     for(int i = 0; i < 5; i++) { //new_plates.txt sorting
         auto temp = content;
         timer.start();
-        radix_string(temp.begin(), temp.end());
+        radix_sort(temp.begin(), temp.end());
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;

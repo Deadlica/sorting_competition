@@ -6,6 +6,7 @@
 #define ALGORITHMS_H
 
 #include <algorithm>
+#include <string>
 #include <vector>
 #include <cmath>
 #include <sstream>
@@ -15,30 +16,30 @@
 enum pivot {MEDIAN_OF_THREE, RIGHT_ELEMENT};
 
 template<typename T>
-size_t count_float_digits(T number) {
-    size_t nr_of_digits = 0;
-    size_t nr_of_floats = 0;
-    T floats = number - int(number);
-    while(std::abs(floats) > 0.0000001) {
-        floats *= 10;
-        nr_of_floats++;
-        floats -= int(floats);
+size_t count_digits(T element) { //Integers
+    size_t digits = 0;
+    while(element > 1) {
+        element /= 10;
+        digits++;
     }
-    while(int(number) > 0) {
-        number /= 10;
-        nr_of_digits++;
-    }
-    return nr_of_digits + nr_of_floats;
+    return digits;
 }
 
-template<typename T>
-size_t count_float_int_digits(T number) { //Kinda hard coded for the specific data :/
-    size_t nr_of_digits = 0;
-    while(number > 1) {
-        number /= 10;
-        nr_of_digits++;
+template<>
+size_t count_digits<double>(double element) { //Doubles
+    size_t digits = 0;
+    size_t float_digits = 0;
+    double floats = element - int(element);
+    while(std::abs(floats) > 0.0000001) {
+        floats *= 10;
+        float_digits++;
+        floats -= int(floats);
     }
-    return nr_of_digits;
+    while(int(element) > 0) {
+        element /= 10;
+        digits++;
+    }
+    return digits + float_digits;
 }
 
 template<typename T>
@@ -174,7 +175,7 @@ namespace alg {
 }
 
 template<typename it>
-void counting_sort_float(it first, it last, unsigned long int nr_pos) {
+void counting_sort(it first, it last, int index) {
     unsigned int remove_decimal = std::pow(10, 2);
     size_t size = last - first, bucket_size = 10;
     double* output = new double[size];
@@ -182,34 +183,26 @@ void counting_sort_float(it first, it last, unsigned long int nr_pos) {
     it current = first;
 
     for(;current != last; current++) {
-        bucket[int(((*current) * remove_decimal) / nr_pos) % 10]++;
+        bucket[int(((*current) * remove_decimal) / index) % 10]++;
     }
 
     for(int index = 1; index < bucket_size; index++) {
         bucket[index] += bucket[index - 1];
     }
     for(current = last - 1; current >= first; current--) {
-        output[bucket[int(((*current) * remove_decimal) / nr_pos) % 10] - 1] = *current;
-        bucket[int(((*current) * remove_decimal) / nr_pos) % 10]--;
+        output[bucket[int(((*current) * remove_decimal) / index) % 10] - 1] = *current;
+        bucket[int(((*current) * remove_decimal) / index) % 10]--;
     }
     std::copy(output, output + size, first);
+    delete[] output;
 }
 
-template<typename it>
-void radix_float(it first, it last) {
-    it max = std::max_element(first, last);
-    size_t iterations = count_float_digits(*max);
-    for(unsigned long nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) {
-        counting_sort_float(first, last, nr_pos);
-    }
-}
-
-template<typename it>
-void counting_sort_string(it first, it last, int index) {
+template<>
+void counting_sort<std::vector<std::string>::iterator>(std::vector<std::string>::iterator first, std::vector<std::string>::iterator last, int index) {
     size_t size = last - first;
-    std::vector<std::string> output(size);
+    std::string* output = new std::string[size];
     int bucket[255] = {0};
-    it current = first;
+    auto current = first;
 
     for(;current != last; current++) {
         bucket[(*current)[index]]++;
@@ -223,15 +216,25 @@ void counting_sort_string(it first, it last, int index) {
         output[bucket[(*current)[index]] - 1] = *current;
         bucket[(*current)[index]]--;
     }
-    std::copy(output.begin(), output.end(), first);
+    std::copy(output, output + size, first);
+    delete[] output;
 }
 
 template<typename it>
-void radix_string(it first, it last) {
+void radix_sort(it first, it last) {
     it max = std::max_element(first, last);
+    size_t iterations = count_digits(*max);
+    for(unsigned long nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) {
+        counting_sort(first, last, nr_pos);
+    }
+}
+
+template<>
+void radix_sort<std::vector<std::string>::iterator>(std::vector<std::string>::iterator first, std::vector<std::string>::iterator last) {
+    auto max = std::max_element(first, last);
     size_t iterations = (*max).size();
     for(int i = iterations - 1; i >= 0; i--) {
-        counting_sort_string(first, last, i);
+        counting_sort(first, last, i);
     }
 }
 
