@@ -126,6 +126,19 @@ void insertion_sort(T first, T last) {
     }
 }
 
+template<typename it>
+void shell_sort(it first, it last, int gap = 2) {
+    int shell = (last - first) / gap;
+    for(int shell = (last - first) / gap; shell > 0; shell /= gap) {
+        for(it pos = first; pos + shell < last; pos++) {
+            if(*pos < *(pos + shell)) {
+                std::iter_swap(pos, pos + shell);
+            }
+        }
+    }
+    insertion_sort(first, last);
+}
+
 template<typename T>
 void selection_sort(T first, T last) {
     for(;first !=  last; first++) {
@@ -269,20 +282,20 @@ void bogo_sort(it first, it last) {
 
 template<typename it>
 void intro_sort_helper(it first, it last, int depth_limit) {
-   size_t size = last - first;
-   if(size < 16) {
-       insertion_sort(first, last);
-       return;
-   }
-   if(depth_limit == 0) {
-       heap_sort(first, last);
-       return;
-   }
-   it pivot = find_median_pivot(first, first + size / 2, last - 1);
-   std::iter_swap(pivot, last - 1);
-   pivot = partition(first, last - 1);
-   intro_sort_helper(first, pivot, depth_limit - 1);
-   intro_sort_helper(pivot + 1, last, depth_limit - 1);
+size_t size = last - first;
+if(size < 16) {
+    insertion_sort(first, last);
+    return;
+}
+if(depth_limit == 0) {
+    heap_sort(first, last);
+    return;
+}
+it pivot = find_median_pivot(first, first + size / 2, last - 1);
+std::iter_swap(pivot, last - 1);
+pivot = partition(first, last - 1);
+intro_sort_helper(first, pivot, depth_limit - 1);
+intro_sort_helper(pivot + 1, last, depth_limit - 1);
 }
 
 template<typename it>

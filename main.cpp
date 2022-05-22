@@ -1,10 +1,11 @@
+#include <algorithm>
 #include <iostream>
 #include "algorithms.h"
 #include <vector>
 #include "timer.h"
 #include <numeric>
 #include "reader.h"
-#include "../ips4o/ips4o.hpp"
+//#include "../ips4o/ips4o.hpp"
 
 void sort_ica();
 void sort_jst();
