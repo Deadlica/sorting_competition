@@ -127,7 +127,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "-j3"
+			"value" : "-j4"
 		},
 		{
 			"name" : "CMAKE_COLOR_MAKEFILE",
