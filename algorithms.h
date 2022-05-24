@@ -194,7 +194,7 @@ namespace alg {
     void counting_sort(it first, it last, int index) {
         unsigned int remove_decimal = std::pow(10, 2);
         size_t size = last - first, bucket_size = 10;
-        double *output = new double[size];
+        typename it::value_type* output = new typename it::value_type[size];
         int bucket[10] = {0};
         it current = first;
 
