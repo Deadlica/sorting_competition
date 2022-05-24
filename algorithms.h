@@ -192,7 +192,7 @@ namespace alg {
 
     template<typename it>
     void counting_sort(it first, it last, int index) {
-        unsigned int remove_decimal = std::pow(10, 2);
+        unsigned int remove_decimal = 100;
         size_t size = last - first, bucket_size = 10;
         typename it::value_type* output = new typename it::value_type[size];
         int bucket[10] = {0};
