@@ -62,7 +62,7 @@ void sort_jst() {
     for(int i = 0; i < 5; i++) { //JST.txt sorting
         auto temp = content;
         timer.start();
-	    alg::thread_sort(std::sort<decltype(temp.begin())>, temp.begin(), temp.end(), THREADS);
+	    alg::thread_sort(alg::intro_sort<decltype(temp.begin())>, temp.begin(), temp.end(), THREADS);
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;
