@@ -1,12 +1,18 @@
 #include <algorithm>
+#include <cstddef>
+#include <functional>
 #include <iostream>
 #include "algorithms.h"
+#include <iterator>
 #include <vector>
 #include "timer.h"
 #include <numeric>
+#include <thread>
 #include "reader.h"
 //#include <boost/sort/spreadsort/spreadsort.hpp>
 //#include "../ips4o/ips4o.hpp"
+
+static const int THREADS = 4;
 
 void sort_ica();
 void sort_jst();
@@ -26,7 +32,7 @@ void sort_ica() {
     for(int i = 0; i < 5; i++) { //ICA.txt sorting
         auto temp = content;
         timer.start();
-        alg::radix_sort(temp.begin(), temp.end());
+        alg::thread_sort(alg::radix_sort<decltype(temp.begin())>, temp.begin(), temp.end(), THREADS);
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;
@@ -56,7 +62,7 @@ void sort_jst() {
     for(int i = 0; i < 5; i++) { //JST.txt sorting
         auto temp = content;
         timer.start();
-	    alg::intro_sort(temp.begin(), temp.end());
+	    alg::thread_sort(std::sort<decltype(temp.begin())>, temp.begin(), temp.end(), THREADS);
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;
@@ -85,7 +91,8 @@ void sort_new_plates() {
     for(int i = 0; i < 5; i++) { //new_plates.txt sorting
         auto temp = content;
         timer.start();
-        alg::radix_sort(temp.begin(), temp.end());
+        //alg::radix_sort(temp.begin(), temp.end());
+        alg::thread_sort(alg::radix_sort<decltype(temp.begin())>, temp.begin(), temp.end(), THREADS);
         timer.stop();
         time_measurements.push_back(timer.time());
         std::is_sorted(temp.begin(), temp.end())? std::cout << "Sorted" << std::endl : std::cout << "Not sorted" << std::endl;

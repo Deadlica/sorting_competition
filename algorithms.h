@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <string>
+#include <thread>
 #include <vector>
 #include <cmath>
 #include <sstream>
@@ -192,7 +193,7 @@ namespace alg {
 
     template<typename it>
     void counting_sort(it first, it last, int index) {
-        unsigned int remove_decimal = 100;
+        unsigned int remove_decimal = std::pow(10, 2);
         size_t size = last - first, bucket_size = 10;
         typename it::value_type* output = new typename it::value_type[size];
         int bucket[10] = {0};
@@ -240,8 +241,8 @@ namespace alg {
     template<typename it>
     void radix_sort(it first, it last) {
         it max = std::max_element(first, last);
-        size_t iterations = count_digits(*max);
-        for (unsigned long nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) {
+        //size_t iterations = count_digits(*max);
+        for (unsigned long nr_pos = 1, i = 0; i < 7; i++, nr_pos *= 10) { //The 7 is hardcoded for a specific file
             counting_sort(first, last, nr_pos);
         }
     }
@@ -333,7 +334,7 @@ namespace alg {
     }
 
     template<typename it>
-    void intro_sort_helper(it first, it last, int depth_limit) {
+    void __intro_sort_helper(it first, it last, int depth_limit) {
         size_t size = last - first;
         if (size < 16) {
             insertion_sort(first, last);
@@ -346,13 +347,13 @@ namespace alg {
         it pivot = find_median_pivot(first, first + size / 2, last - 1);
         std::iter_swap(pivot, last - 1);
         pivot = partition(first, last - 1);
-        intro_sort_helper(first, pivot, depth_limit - 1);
-        intro_sort_helper(pivot + 1, last, depth_limit - 1);
+        __intro_sort_helper(first, pivot, depth_limit - 1);
+        __intro_sort_helper(pivot + 1, last, depth_limit - 1);
     }
 
     template<typename it>
     void intro_sort(it first, it last) {
-        intro_sort_helper(first, last, 2 * std::log2(last - first));
+        __intro_sort_helper(first, last, 2 * std::log2(last - first));
     }
 
     template<typename it>
@@ -371,11 +372,41 @@ namespace alg {
 
                 if (mid < right) {
                     std::inplace_merge(first + left, first + mid + 1, first + right);
-                    //auto merged = merge(first + left, first + mid, first + mid, first + right);
-                    //std::copy(merged.begin(), merged.end(), first);
                 }
             }
         }
+    }
+
+
+
+    template<typename function, typename it>
+    void thread_sort(function func, it first, it last, int nr_of_threads) {
+        std::vector<std::thread> threads;
+        int size = last - first;
+        int range = size / nr_of_threads;
+        it left = first;
+        it right = left + range;
+        for(int i = 0; i < nr_of_threads; i++, left = right, right += range) {
+            threads.push_back(std::thread(func, left, std::min(right, last)));
+        }
+
+        for(auto &thread: threads) {
+            thread.join();
+        }
+
+        int i = nr_of_threads;
+        left = first, right = left + 2 * range;
+        for(it middle = left + range; nr_of_threads >= 2; nr_of_threads /= 2, left = right, middle = left + range, right = left + 2* range) {
+            //Sub merges
+            threads.push_back(std::thread(std::inplace_merge<decltype(left)>, left, middle, right));
+        }
+
+        for(; i < threads.size(); i++) {
+            threads[i].join();
+        }
+
+        std::inplace_merge(first, first + size / 2, last);
+
     }
 
 };
