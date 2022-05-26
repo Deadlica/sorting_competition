@@ -14,18 +14,22 @@
 
 static const int THREADS = 4;
 
+template<typename T>
 void sort_ica();
+
 void sort_jst();
 void sort_new_plates();
 
 int main() {
-    sort_ica();
+    sort_ica<int>();
+    sort_ica<double>();
     sort_jst();
     sort_new_plates();
 }
 
+template<typename T>
 void sort_ica() {
-    auto content = parse_ica("data/ICA.txt");
+    auto content = parse_ica<T>("data/ICA.txt");
     Timer timer;
     std::vector<double> time_measurements;
     std::cout << "ICA.txt" << std::endl;

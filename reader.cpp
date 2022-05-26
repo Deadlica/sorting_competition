@@ -3,22 +3,7 @@
 //
 
 #include "reader.h"
-
-std::vector<double> parse_ica(std::string filename) {
-    std::vector<double> data;
-    std::ifstream file(filename);
-    double number;
-    std::string kr;
-    while(!file.eof()) {
-        file >> number >> kr;
-        if(file.eof()) {
-            break;
-        }
-        data.push_back(number);
-    }
-    file.close();
-    return data;
-}
+#include <type_traits>
 
 std::vector<double> parse_jst(std::string filename) {
     std::vector<double> data;

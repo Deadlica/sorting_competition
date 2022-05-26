@@ -6,6 +6,7 @@
 #define ALGORITHMS_H
 
 #include <algorithm>
+#include <cassert>
 #include <string>
 #include <thread>
 #include <vector>
@@ -23,7 +24,7 @@ namespace alg {
     template<typename T>
     size_t count_digits(T element) { //Integers
         size_t digits = 0;
-        while (element > 1) {
+        while (element >= 1) {
             element /= 10;
             digits++;
         }
@@ -193,11 +194,35 @@ namespace alg {
 
     template<typename it>
     void counting_sort(it first, it last, int index) {
-        unsigned int remove_decimal = std::pow(10, 2);
         size_t size = last - first, bucket_size = 10;
-        typename it::value_type* output = new typename it::value_type[size];
+        int* output = new int[size];
         int bucket[10] = {0};
-        it current = first;
+        auto current = first;
+
+        for(; current != last; current++) {
+            bucket[int((*current) / index) % 10]++;
+        }
+
+        for(int index = 1; index < bucket_size; index++) {
+            bucket[index] += bucket[index - 1];
+        }
+
+        for(current = last - 1; current >= first; current--) {
+            output[bucket[int((*current) / index) % 10] - 1] = *current;
+            bucket[int((*current) / index) % 10]--;
+        }
+
+        std::copy(output, output + size, first);
+        delete[] output;
+    }
+
+    template<>
+    void counting_sort<std::vector<double>::iterator>(std::vector<double>::iterator first, std::vector<double>::iterator last, int index) {
+        unsigned int remove_decimal = 100;
+        size_t size = last - first, bucket_size = 10;
+        double* output = new double[size];
+        int bucket[10] = {0};
+        auto current = first;
 
         for (; current != last; current++) {
             bucket[int(((*current) * remove_decimal) / index) % 10]++;
@@ -241,8 +266,9 @@ namespace alg {
     template<typename it>
     void radix_sort(it first, it last) {
         it max = std::max_element(first, last);
-        //size_t iterations = count_digits(*max);
-        for (unsigned long nr_pos = 1, i = 0; i < 7; i++, nr_pos *= 10) { //The 7 is hardcoded for a specific file
+        size_t iterations = count_digits(*max);
+        if(iterations > 7) iterations = 7;
+        for (unsigned long nr_pos = 1, i = 0; i < iterations; i++, nr_pos *= 10) { //The 7 is hardcoded for a specific file
             counting_sort(first, last, nr_pos);
         }
     }
@@ -393,7 +419,6 @@ namespace alg {
         for(auto &thread: threads) {
             thread.join();
         }
-
         int i = nr_of_threads;
         left = first, right = left + 2 * range;
         for(it middle = left + range; nr_of_threads >= 2; nr_of_threads /= 2, left = right, middle = left + range, right = left + 2* range) {

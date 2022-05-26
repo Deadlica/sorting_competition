@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/comp.dir/main.cpp.o CMakeFiles/comp.dir/timer.cpp.o CMakeFiles/comp.dir/reader.cpp.o -o comp 
